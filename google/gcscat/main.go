@@ -21,7 +21,8 @@ var (
 )
 
 var (
-	flagExpire = flag.Duration("expire", 0, "expiration interval")
+	flagExpire   = flag.Duration("expire", 0, "expiration `interval`")
+	flagCacheDir = flag.String("cache", "/tmp/gcscache", "store cache in `dir`")
 )
 
 func usage() {
@@ -39,7 +40,7 @@ func main() {
 	}
 
 	loader, err := gcs.NewLoader("/")
-	cache, err = diskcache.New("/tmp/gcscache", loader)
+	cache, err = diskcache.New(*flagCacheDir, loader)
 	if *flagExpire != 0 {
 		cache.SetExpiration(*flagExpire)
 	}
